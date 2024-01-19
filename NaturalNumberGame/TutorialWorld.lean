@@ -1,4 +1,4 @@
-inductive N where
+inductive N : Type
 | z : N
 | s : N → N
 deriving Repr
