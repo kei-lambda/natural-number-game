@@ -44,7 +44,13 @@ theorem ten_eq_s_nine    : ten   = s nine  := rfl
 
 theorem N.add_z (n : N) : n + z = n := rfl
 theorem N.add_s (m n : N) : m + s n = s (m + n) := rfl
+
 theorem N.z_add (n : N) : z + n = n := by
   induction n with
   | z => rfl
   | s n ih => rw [add_s, ih]
+
+theorem N.s_add (m n : N) : s m + n = s (m + n) := by
+  induction n with
+  | z => rfl
+  | s n ih => rw [add_s, ih, add_s]
