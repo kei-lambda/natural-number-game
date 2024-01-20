@@ -3,21 +3,23 @@ inductive N : Type
 | s : N → N
 deriving Repr
 
+namespace N
+
 open N
 
-def N.add : N → N → N
+def add : N → N → N
 | m, z => m
 | m, s n => s (add m n)
 
-def N.mul : N → N → N
+def mul : N → N → N
 | _, z => z
 | m, s n => add m (mul m n)
 
 instance : Add N where
-  add := N.add
+  add := add
 
 instance : Mul N where
-  mul := N.mul
+  mul := mul
 
 def zero  : N := z
 def one   : N := s zero
@@ -42,28 +44,30 @@ theorem eight_eq_s_seven : eight = s seven := rfl
 theorem nine_eq_s_eight  : nine  = s eight := rfl
 theorem ten_eq_s_nine    : ten   = s nine  := rfl
 
-theorem N.add_z (n : N) : n + z = n := rfl
-theorem N.add_s (m n : N) : m + s n = s (m + n) := rfl
+theorem add_z (n : N)   : n + z   = n         := rfl
+theorem add_s (m n : N) : m + s n = s (m + n) := rfl
 
-theorem N.z_add (n : N) : z + n = n := by
+theorem z_add (n : N) : z + n = n := by
   induction n with
   | z => rfl
   | s n ih => rw [add_s, ih]
 
-theorem N.s_add (m n : N) : s m + n = s (m + n) := by
+theorem s_add (m n : N) : s m + n = s (m + n) := by
   induction n with
   | z => rfl
   | s n ih => rw [add_s, ih, add_s]
 
-theorem N.add_comm (a b : N) : a + b = b + a := by
+theorem add_comm (a b : N) : a + b = b + a := by
   induction a with
   | z => rw [add_z, z_add]
   | s n ih => rw [add_s, s_add, ih]
 
-theorem N.add_assoc (a b c : N) : a + b + c = a + (b + c) := by
+theorem add_assoc (a b c : N) : a + b + c = a + (b + c) := by
   induction c with
   | z => rfl
   | s n ih => rw [add_s, add_s, ih, add_s]
 
-theorem N.add_right_comm (a b c : N) : (a + b) + c = (a + c) + b := by
+theorem add_right_comm (a b c : N) : (a + b) + c = (a + c) + b := by
   rw [add_assoc, add_assoc, add_comm b c]
+
+end N
