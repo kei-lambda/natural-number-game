@@ -59,3 +59,8 @@ theorem N.add_comm (a b : N) : a + b = b + a := by
   induction a with
   | z => rw [add_z, z_add]
   | s n ih => rw [add_s, s_add, ih]
+
+theorem N.add_assoc (a b c : N) : a + b + c = a + (b + c) := by
+  induction c with
+  | z => rfl
+  | s n ih => rw [add_s, add_s, ih, add_s]
