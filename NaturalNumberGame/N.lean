@@ -6,15 +6,18 @@ deriving Repr
 open N
 
 def N.add : N → N → N
-| z,   n => n
-| s m, n => s (m.add n)
+| m, z => m
+| m, s n => s (add m n)
 
 def N.mul : N → N → N
-| z,   _ => z
-| s m, n => n.add (m.mul n)
+| _, z => z
+| m, s n => add m (mul m n)
 
-infixl:65 " + " => N.add
-infixl:70 " * " => N.mul
+instance : Add N where
+  add := N.add
+
+instance : Mul N where
+  mul := N.mul
 
 def zero  : N := z
 def one   : N := s zero
@@ -39,12 +42,9 @@ theorem eight_eq_s_seven : eight = s seven := rfl
 theorem nine_eq_s_eight  : nine  = s eight := rfl
 theorem ten_eq_s_nine    : ten   = s nine  := rfl
 
-theorem N.add_z : ∀ (x : N), x + z = x
-| z   => rfl
-| s n => by rw [add, add_z n]
-
-theorem N.add_s : ∀ (x y : N), x + (s y) = s (x + y)
-| z,   y => rfl
-| s x, y => by
-  rw [add, add]
-  rw [add_s x y]
+theorem N.add_z (n : N) : n + z = n := rfl
+theorem N.add_s (m n : N) : m + s n = s (m + n) := rfl
+theorem N.z_add (n : N) : z + n = n := by
+  induction n with
+  | z => rfl
+  | s n ih => rw [add_s, ih]
