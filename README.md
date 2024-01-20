@@ -5,7 +5,7 @@ The repository contains my solutions for [NNG4][nng4].
 ## Progress
 
 - [x] [Tutorial World](./NaturalNumberGame/TutorialWorld.lean)
-- [ ] Addition World
+- [x] [Addition World](./NaturalNumberGame/AdditionWorld.lean)
 - [ ] Multplication World
 - [ ] Power World
 - [ ] Implication World
