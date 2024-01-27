@@ -21,8 +21,7 @@ instance : Add N where
 instance : Mul N where
   mul := mul
 
-def zero  : N := z
-def one   : N := s zero
+def one   : N := s z
 def two   : N := s one
 def three : N := s two
 def four  : N := s three
