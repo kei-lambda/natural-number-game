@@ -1,3 +1,5 @@
+import Mathlib.Tactic.Contrapose
+
 inductive N : Type
 | z : N
 | s : N → N
@@ -14,6 +16,14 @@ def add : N → N → N
 def mul : N → N → N
 | _, z => z
 | m, s n => add m (mul m n)
+
+def pred : N → N
+| z => z
+| s n => n
+
+def z? : N → Prop
+| z => True
+| s _ => False
 
 instance : Add N where
   add := add
@@ -69,8 +79,15 @@ theorem add_assoc (a b c : N) : a + b + c = a + (b + c) := by
 theorem add_right_comm (a b c : N) : (a + b) + c = (a + c) + b := by
   rw [add_assoc, add_assoc, add_comm b c]
 
+theorem add_left_comm (a b c : N) : a + (b + c) = b + (a + c) := by
+  rw [← add_assoc, add_comm a b, add_assoc]
+
+theorem pred_s (n : N) : pred (s n) = n     := rfl
+theorem z_z?           : z? z       = True  := rfl
+theorem z_s?   (n : N) : z? (s n)   = False := rfl
+
 theorem s_inj (a b : N) (h : s a = s b) : a = b := by
-  injection h
+  rw [← pred_s a, ← pred_s b, h]
 
 theorem s_eq_add_one (n : N) : s n = n + one := rfl
 
@@ -80,10 +97,40 @@ theorem s_eq_add_one (n : N) : s n = n + one := rfl
 -- https://proofassistants.stackexchange.com/a/2625
 theorem z_ne_s (n : N) : z ≠ s n := by
   intro h
-  injection h
+  rw [← z_s? n, ← h, z_z?]
+  trivial
 
 theorem s_ne_z (n : N) : s n ≠ z := by
   intro h
-  injection h
+  rw [← z_s? n, h, z_z?]
+  trivial
+
+theorem s_ne_s (m n : N) (h : m ≠ n) : s m ≠ s n := by
+  contrapose! h
+  apply s_inj
+  exact h
+
+syntax (name := simp_add) "simp_add" : tactic
+macro_rules | `(tactic| simp_add) => `(tactic| (simp only [add_assoc, add_left_comm, add_comm]))
+
+-- NOTE: can be automatically derived using:
+-- `deriving instance DecidableEq for N`
+instance instDecidableEq : DecidableEq N
+| z, z => isTrue <| by
+  show z = z
+  rfl
+| s m, z => isFalse <| by
+  show s m ≠ z
+  exact s_ne_z m
+| z, s n => isFalse <| by
+  show z ≠ s n
+  exact z_ne_s n
+| s m, s n => match instDecidableEq m n with
+  | isTrue (h : m = n) => isTrue <| by
+    show s m = s n
+    rw [h]
+  | isFalse (h : m ≠ n) => isFalse <| by
+    show s m ≠ s n
+    exact s_ne_s m n h
 
 end N
