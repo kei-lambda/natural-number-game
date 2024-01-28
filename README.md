@@ -10,7 +10,7 @@ The repository contains my solutions for [NNG4][nng4].
 - [x] [Addition World](./NaturalNumberGame/AdditionWorld.lean)
 - [ ] Multplication World
 - [ ] Power World
-- [ ] Implication World
+- [x] [Implication World](./NaturalNumberGame/ImplicationWorld.lean)
 - [ ] Algorithm World
 - [ ] Advanced Addition World
 - [ ] ≤ World
@@ -20,5 +20,13 @@ The repository contains my solutions for [NNG4][nng4].
 - [x] `rfl`
 - [x] `rw`
 - [x] `induction`
+- [x] `exact`
+- [x] `apply`
+- [x] `intro`
+- [x] [`symm`](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Tactic/Relation/Symm.html#symm)
+
+### Extra Tactics
+
+- [x] `injection`
 
 [nng4]: https://adam.math.hhu.de/#/g/leanprover-community/nng4

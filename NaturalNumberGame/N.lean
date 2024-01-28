@@ -69,4 +69,21 @@ theorem add_assoc (a b c : N) : a + b + c = a + (b + c) := by
 theorem add_right_comm (a b c : N) : (a + b) + c = (a + c) + b := by
   rw [add_assoc, add_assoc, add_comm b c]
 
+theorem s_inj (a b : N) (h : s a = s b) : a = b := by
+  injection h
+
+theorem s_eq_add_one (n : N) : s n = n + one := rfl
+
+-- see also:
+-- https://proofassistants.stackexchange.com/a/1664
+-- https://proofassistants.stackexchange.com/a/2626
+-- https://proofassistants.stackexchange.com/a/2625
+theorem z_ne_s (n : N) : z ≠ s n := by
+  intro h
+  injection h
+
+theorem s_ne_z (n : N) : s n ≠ z := by
+  intro h
+  injection h
+
 end N
