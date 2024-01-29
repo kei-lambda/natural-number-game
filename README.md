@@ -12,7 +12,7 @@ The repository contains my solutions for [NNG4][nng4].
 - [ ] Power World
 - [x] [Implication World](./NaturalNumberGame/ImplicationWorld.lean)
 - [x] [Algorithm World](./NaturalNumberGame/AlgorithmWorld.lean)
-- [ ] Advanced Addition World
+- [x] [Advanced Addition World](./NaturalNumberGame/AdvancedAdditionWorld.lean)
 - [ ] ≤ World
 - [ ] Advanced Multplication World
 
@@ -24,12 +24,12 @@ The repository contains my solutions for [NNG4][nng4].
 - [x] `exact`
 - [x] `apply`
 - [x] `intro`
-- [x] [`symm`][symm]
+- [x] `symm`
 - [x] `simp`
 - [x] `trivial`
 - [x] [`contrapose`][contrapose]
 - [x] `decide`
-- [ ] `cases`
+- [x] `cases`
 - [ ] `have`
 - [ ] `left`
 - [ ] `right`
@@ -43,9 +43,9 @@ The repository contains my solutions for [NNG4][nng4].
 ### Extra Tactics
 
 - [x] `injection`
+- [x] `assumption`
 
 [nng4]: https://adam.math.hhu.de/#/g/leanprover-community/nng4
-[symm]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Tactic/Relation/Symm.html#symm
 [contrapose]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Tactic/Contrapose.html#contrapose
 [tauto]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Tactic/Tauto.html#tauto
 [use]: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Tactic/Use.html#use

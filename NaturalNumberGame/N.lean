@@ -133,4 +133,42 @@ instance instDecidableEq : DecidableEq N
     show s m ≠ s n
     exact s_ne_s m n h
 
+theorem add_right_cancel (a b n : N) : a + n = b + n → a = b := by
+  induction n with
+  | z => simp [add_z]
+  | s => simp [add_s]; assumption
+
+theorem add_left_cancel (a b n : N) : n + a = n + b → a = b := by
+  induction n with
+  | z => simp [z_add]
+  | s => simp [s_add]; assumption
+
+theorem add_left_eq_self (a b : N) : a + b = b → a = z := by
+  induction b with
+  | z => simp [add_z]
+  | s => simp [add_s]; assumption
+
+theorem add_right_eq_self (a b : N) : a + b = a → b = z := by
+  induction a with
+  | z => simp [z_add]
+  | s => simp [s_add]; assumption
+
+-- NOTE: can be solved with: `cases b <;> simp [add_z, add_s]`
+theorem add_right_eq_z (a b : N) : a + b = z → a = z := by
+  cases b
+  simp [add_z]
+  intro h
+  rw [add_s] at h
+  symm at h
+  contrapose h
+  apply z_ne_s
+
+theorem add_left_eq_z (a b : N) : a + b = z → b = z := by
+  cases a
+  simp [z_add]
+  intro h
+  rw [s_add] at h
+  contrapose h
+  apply s_ne_z
+
 end N
