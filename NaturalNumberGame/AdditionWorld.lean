@@ -1,32 +1,34 @@
-import NaturalNumberGame.N
+import NaturalNumberGame.Basic
 
-open N
+open Natural
+
+variable (a b c : Natural)
 
 /- # induction -/
--- #1: 0 + n = n
-example (n : N) : z + n = n := by
-  induction n with
-  | z => rfl
-  | s n ih => rw [add_s, ih]
-
--- #2: s m + n = s (m + n)
-example (m n : N) : s m + n = s (m + n) := by
-  induction n with
-  | z => rfl
-  | s n ih => rw [add_s, ih, add_s]
-
--- #3: a + b = b + c
-example (a b : N) : a + b = b + a := by
+-- 1
+example : zero + a = a := by
   induction a with
-  | z => rw [add_z, z_add]
-  | s a ih => rw [add_s, s_add, ih]
+  | zero => rfl
+  | succ _ ih => rw [add_succ, ih]
 
--- #4: a + b + c = a + (b + c)
-example (a b c : N) : a + b + c = a + (b + c) := by
+-- 2
+example : succ a + b = succ (a + b) := by
+  induction b with
+  | zero => rfl
+  | succ _ ih => rw [add_succ, ih, add_succ]
+
+-- 3
+example : a + b = b + a := by
+  induction a with
+  | zero => rw [add_zero, zero_add]
+  | succ _ ih => rw [add_succ, succ_add, ih]
+
+-- 4
+example : (a + b) + c = a + (b + c) := by
   induction c with
-  | z => rfl
-  | s n ih => rw [add_s, add_s, ih, add_s]
+  | zero => rfl
+  | succ _ ih => rw [add_succ, add_succ, ih, add_succ]
 
--- #5: (a + b) + c = (a + c) + b
-example (a b c : N) : (a + b) + c = (a + c) + b := by
+-- 5
+example : (a + b) + c = (a + c) + b := by
   rw [add_assoc, add_assoc, add_comm b c]

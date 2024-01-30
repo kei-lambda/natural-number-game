@@ -1,46 +1,48 @@
-import NaturalNumberGame.N
+import NaturalNumberGame.Basic
 
-open N
+open Natural
+
+variable (a b c : Natural)
 
 /- # rfl: reflexivity -/
--- #1: 37x + q = 37x + q
-example (x q : N) : seven * five * x + q = seven * five * x + q := by
+-- 1
+example : seven * five * a + b = seven * five * a + b := by
   rfl
 
 /- # rw: rewrite -/
--- #2: 2y = 2(x + 7), where h : y = x + 7
-example (x y : N) (h : y = x + seven) : two * y = two * (x + seven) := by
+-- 2
+example (h : b = a + seven) : two * b = two * (a + seven) := by
   rw [h]
 
--- #3: 2 = s (s z), by: s 1 = s (s z); s (s 0) = s (s z);
-example : two = s (s z) := by
-  rw [two_eq_s_one]
-  rw [one_eq_s_z]
+-- 3
+example : two = succ (succ zero) := by
+  rw [two_eq_succ_one]
+  rw [one_eq_succ_zero]
 
--- #4: 2 = s (s z), by: 2 = s 1; 2 = s (s 0);
-example : two = s (s z) := by
-  rw [← one_eq_s_z]
-  rw [← two_eq_s_one]
+-- 4
+example : two = succ (succ zero) := by
+  rw [← one_eq_succ_zero]
+  rw [← two_eq_succ_one]
 
--- #5: a + (b + 0) + (c + 0) = a + b + c
-example (a b c : N) : a + (b + z) + (c + z) = a + b + c := by
-  rw [add_z, add_z]
+-- 5
+example : a + (b + zero) + (c + zero) = a + b + c := by
+  rw [add_zero, add_zero]
 
--- #6: a + (b + 0) + (c + 0) = a + b + c
-example (a b c : N) : a + (b + z) + (c + z) = a + b + c := by
-  rw [add_z c]
-  rw [add_z b]
+-- 6
+example : a + (b + zero) + (c + zero) = a + b + c := by
+  rw [add_zero c]
+  rw [add_zero b]
 
--- #7: s n = n + 1
-example (n : N) : s n = n + one := by
-  rw [one_eq_s_z]
-  rw [add_s]
-  rw [add_z]
+-- 7
+example : succ a = a + one := by
+  rw [one_eq_succ_zero]
+  rw [add_succ]
+  rw [add_zero]
 
--- #8: 2 + 2 = 4
+-- 8
 example : two + two = four := by
-  rw [two_eq_s_one]
-  rw [one_eq_s_z]
-  rw [add_s, add_s]
-  rw [add_z]
-  rw [four_eq_s_three, three_eq_s_two, two_eq_s_one, one_eq_s_z]
+  rw [two_eq_succ_one]
+  rw [one_eq_succ_zero]
+  rw [add_succ, add_succ]
+  rw [add_zero]
+  rw [four_eq_succ_three, three_eq_succ_two, two_eq_succ_one, one_eq_succ_zero]

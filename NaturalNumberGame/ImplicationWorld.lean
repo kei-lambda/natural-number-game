@@ -1,76 +1,72 @@
-import NaturalNumberGame.N
+import NaturalNumberGame.Basic
 
-open N
+open Natural
+
+variable (a b c : Natural)
 
 /- # exact -/
--- #1: x + y = 37
-example
-  (x y z : N)
-  (h₁ : x + y = (three * ten + seven))
-  (h₂ : three * x + z = (four * ten + two))
-  : x + y = (three * ten + seven) := by
-  exact h₁
+-- 1
+example (h : a + b = (three * ten + seven)) : a + b = (three * ten + seven) := by exact h
 
--- #2: x = y + 2
-example (x y : N) (h : z + x = z + y + two) : x = y + two := by
-  repeat rw [z_add] at h
+-- #2: a = b + 2
+example (h : zero + a = zero + b + two) : a = b + two := by
+  repeat rw [zero_add] at h
   exact h
 
 /- # apply -/
--- #3: x = 37 ⇒ y = 42
+-- 3
 example
-  (x y : N)
-  (h₁ : x = (three * ten + seven))
-  (h₂ : x = (three * ten + seven) → y = (four * ten + two))
-  : y = (four * ten + two) := by
+  (h₁ : a = (three * ten + seven))
+  (h₂ : a = (three * ten + seven) → b = (four * ten + two))
+  : b = (four * ten + two) := by
   apply h₂
   exact h₁
 
 /- # injection -/
--- #4: x + 1 = 4 ⇒ x = 3
-example (x : N) (h : x + one = four) : x = three := by
-  rw [four_eq_s_three] at h
-  rw [← s_eq_add_one] at h
-  apply s_inj
+-- 4
+example (h : a + one = four) : a = three := by
+  rw [four_eq_succ_three] at h
+  rw [← succ_eq_add_one] at h
+  apply succ_inj
   exact h
 
--- #5: x + 1 = 4 ⇒ x = 3 (backwards)
-example (x : N) (h : x + one = four) : x = three := by
-  apply s_inj
-  rw [s_eq_add_one]
-  rw [← four_eq_s_three]
+-- 5
+example (h : a + one = four) : a = three := by
+  apply succ_inj
+  rw [succ_eq_add_one]
+  rw [← four_eq_succ_three]
   exact h
 
 /- # intro -/
--- #6: x = 37 ⇒ x = 37
-example (x : N) : x = (three * ten + seven) → x = (three * ten + seven) := by
+-- 6
+example : a = (three * ten + seven) → a = (three * ten + seven) := by
   intro h
   exact h
 
--- #7: x + 1 = y + 1 ⇒ x = y
-example (x y : N) : x + one = y + one → x = y := by
+-- 7
+example : a + one = b + one → a = b := by
   intro h
-  apply s_inj
-  repeat rw [s_eq_add_one]
+  apply succ_inj
+  repeat rw [succ_eq_add_one]
   exact h
 
--- #8: x = y ⇒ x ≠ y → False
-example (x y : N) (h₁ : x = y) (h₂ : x ≠ y) : False := by
+-- 8
+example (h₁ : a = b) (h₂ : a ≠ b) : False := by
   apply h₂
   exact h₁
 
--- #9: 0 ≠ 1
-example : z ≠ one := by
-  apply z_ne_s
+-- 9
+example : zero ≠ one := by
+  apply zero_ne_succ
 
--- #10: 1 ≠ 0
-example : one ≠ z := by
-  apply s_ne_z
+-- 10
+example : one ≠ zero := by
+  apply succ_ne_zero
 
--- #11: 2 + 2 ≠ 5
-example : s (s z) + s (s z) ≠ s (s (s (s (s z)))) := by
+-- 11
+example : succ (succ zero) + succ (succ zero) ≠ succ (succ (succ (succ (succ zero)))) := by
   intro h
-  rw [s_add, s_add, z_add] at h
+  rw [succ_add, succ_add, zero_add] at h
   injection h with h₁
   injection h₁ with h₂
   injection h₂ with h₃

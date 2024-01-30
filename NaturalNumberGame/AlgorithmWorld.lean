@@ -1,48 +1,46 @@
-import NaturalNumberGame.N
+import NaturalNumberGame.Basic
 
-open N
+open Natural
 
--- #1: a + (b + c) = b + (a + c)
-example (a b c : N) : a + (b + c) = b + (a + c) := by
+variable (a b c d e f g h : Natural)
+
+-- 1
+example : a + (b + c) = b + (a + c) := by
   rw [add_left_comm]
 
--- #2: (a + b) + (c + d) = ((a + c) + d) + b
-example (a b c d : N) : (a + b) + (c + d) = ((a + c) + d) + b := by
+-- 2
+example : (a + b) + (c + d) = ((a + c) + d) + b := by
   repeat rw [add_assoc]
   rw [add_comm d b]
   rw [add_left_comm c b]
 
 /- # simp -/
--- #3: (d + f) + (h + (a + c)) + (g + e + b) = a + b + c + d + e + f + g + h
-example
-  (a b c d e f g h : N)
-  : (d + f) + (h + (a + c)) + (g + e + b) = a + b + c + d + e + f + g + h := by
+-- 3
+example : (d + f) + (h + (a + c)) + (g + e + b) = a + b + c + d + e + f + g + h := by
   simp only [add_assoc, add_left_comm, add_comm]
 
--- #4: (d + f) + (h + (a + c)) + (g + e + b) = a + b + c + d + e + f + g + h
-example
-  (a b c d e f g h : N)
-  : (d + f) + (h + (a + c)) + (g + e + b) = a + b + c + d + e + f + g + h := by
+-- 4
+example : (d + f) + (h + (a + c)) + (g + e + b) = a + b + c + d + e + f + g + h := by
   simp_add
 
--- #5: s a = s b ⇒ a = b
-example (a b : N) (h : s a = s b) : a = b := by
-  apply s_inj
+-- 5
+example (h : succ a = succ b) : a = b := by
+  apply succ_inj
   exact h
 
 /- # trivial -/
--- #6: s a ≠ 0
-example (a : N) : s a ≠ z := by apply s_ne_z
+-- 6
+example : succ a ≠ zero := by apply succ_ne_zero
 
 /- # contrapose -/
--- #7: a ≠ b ⇒ s a ≠ s b
-example (a b : N) (h : a ≠ b) : s a ≠ s b := by
-  apply s_ne_s
+-- 7
+example (h : a ≠ b) : succ a ≠ succ b := by
+  apply succ_ne_succ
   exact h
 
 /- # decide -/
--- #8: 20 + 20 = 40
+-- 8
 example : (two * ten) + (two * ten) = (four * ten) := by decide
 
--- #9: 2 + 2 ≠ 5
+-- 9
 example : two + two ≠ five := by decide

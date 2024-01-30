@@ -1,3 +1,1 @@
-import NaturalNumberGame.N
-import NaturalNumberGame.TutorialWorld
-import NaturalNumberGame.AdditionWorld
+import NaturalNumberGame.Basic

@@ -1,28 +1,30 @@
-import NaturalNumberGame.N
+import NaturalNumberGame.Basic
 
-open N
+open Natural
 
--- #1: a + n = b + n ⇒ a = b
-example (a b n : N) : a + n = b + n → a = b := by
+variable (a b c : Natural)
+
+-- 1
+example : a + c = b + c → a = b := by
   apply add_right_cancel
 
--- #2: n + a = n + b ⇒ a = b
-example (a b n : N) : n + a = n + b → a = b := by
+-- 2
+example : c + a = c + b → a = b := by
   apply add_left_cancel
 
--- #3: a + b = b ⇒ a = 0
-example (a b : N) : a + b = b → a = z := by
+-- 3
+example : a + b = b → a = zero := by
   apply add_left_eq_self
 
--- #4: a + b = a ⇒ b = 0
-example (a b : N) : a + b = a → b = z := by
+-- 4
+example : a + b = a → b = zero := by
   apply add_right_eq_self
 
 /- # cases -/
--- #5: a + b = 0 ⇒ a = 0
-example (a b : N) : a + b = z → a = z := by
-  apply add_right_eq_z
+-- 5
+example : a + b = zero → a = zero := by
+  apply add_right_eq_zero
 
--- #6: a + b = 0 ⇒ b = 0
-example (a b : N) : a + b = z → b = z := by
-  apply add_left_eq_z
+-- 6
+example : a + b = zero → b = zero := by
+  apply add_left_eq_zero
