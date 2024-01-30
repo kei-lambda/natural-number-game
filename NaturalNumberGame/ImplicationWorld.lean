@@ -67,8 +67,4 @@ example : one ≠ zero := by
 example : succ (succ zero) + succ (succ zero) ≠ succ (succ (succ (succ (succ zero)))) := by
   intro h
   rw [succ_add, succ_add, zero_add] at h
-  injection h with h₁
-  injection h₁ with h₂
-  injection h₂ with h₃
-  injection h₃ with h₄
-  injection h₄
+  cases h
