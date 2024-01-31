@@ -11,15 +11,15 @@ def add : Natural → Natural → Natural
 | a, zero => a
 | a, succ b => succ (add a b)
 
-instance : HAdd Natural Natural Natural where
-  hAdd := add
+instance : Add Natural where
+  add := Natural.add
 
 def mul : Natural → Natural → Natural
 | _, zero => zero
 | a, succ b => add a (mul a b)
 
-instance : HMul Natural Natural Natural where
-  hMul := mul
+instance : Mul Natural where
+  mul := Natural.mul
 
 def pred : Natural → Natural
 | zero => zero
